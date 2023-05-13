@@ -30,6 +30,7 @@ const PlatformIconList = ({ platforms }: IProps) => {
         web: BsGlobe,
     };
 
+    // github error
     return (
         <HStack marginY={1}>
             {platforms.map((platform) => (
