@@ -16,9 +16,13 @@ const GameCard = ({ game }: IProps) => {
                 <Heading fontSize={'2xl'}>{game.name}</Heading>
 
                 <HStack justifyContent={'space-between'}>
-                    <PlatformIconList
-                        platforms={game.parent_platforms.map((p) => p.platform)}
-                    ></PlatformIconList>
+                    {game.parent_platforms && (
+                        <PlatformIconList
+                            platforms={game.parent_platforms?.map(
+                                (p) => p.platform
+                            )}
+                        ></PlatformIconList>
+                    )}
                     <CriticScore score={game.metacritic}></CriticScore>
                 </HStack>
             </CardBody>
