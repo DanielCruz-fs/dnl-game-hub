@@ -13,9 +13,7 @@ const GameCard = ({ game }: IProps) => {
         <Card>
             <Image src={getCroppedImageUrl(game.background_image)}></Image>
             <CardBody>
-                <Heading fontSize={'2xl'}>{game.name}</Heading>
-
-                <HStack justifyContent={'space-between'}>
+                <HStack marginBottom={3} justifyContent={'space-between'}>
                     {game.parent_platforms && (
                         <PlatformIconList
                             platforms={game.parent_platforms?.map(
@@ -25,6 +23,7 @@ const GameCard = ({ game }: IProps) => {
                     )}
                     <CriticScore score={game.metacritic}></CriticScore>
                 </HStack>
+                <Heading fontSize={'2xl'}>{game.name}</Heading>
             </CardBody>
         </Card>
     );
