@@ -3,6 +3,7 @@ import PlatformIconList from './PlatformIconList';
 import CriticScore from './CriticScore';
 import getCroppedImageUrl from '../services/image-url';
 import { IGame } from '../hooks/useGames';
+import Emoji from './Emoji';
 
 interface IProps {
     game: IGame;
@@ -23,7 +24,10 @@ const GameCard = ({ game }: IProps) => {
                     )}
                     <CriticScore score={game.metacritic}></CriticScore>
                 </HStack>
-                <Heading fontSize={'2xl'}>{game.name}</Heading>
+                <Heading fontSize={'2xl'}>
+                    {game.name}
+                    <Emoji rating={game.rating_top}></Emoji>
+                </Heading>
             </CardBody>
         </Card>
     );
