@@ -4,6 +4,7 @@ import { AxiosRequestConfig, CanceledError } from 'axios';
 
 export interface IFetchResponse<T> {
     count: number;
+    next: string | null;
     results: T[];
 }
 

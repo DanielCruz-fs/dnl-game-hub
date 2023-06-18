@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { IGameQuery } from '../App';
 import { IFetchResponse } from './useData';
 import APIClient from '../services/api-client';
@@ -22,17 +22,21 @@ const apiClient = new APIClient<IGame>('/games');
 
 const useGames = (gameQuery: IGameQuery) =>
     // anytime the gamequery changes even its properties react query send a new request
-    useQuery<IFetchResponse<IGame>, Error>({
+    useInfiniteQuery<IFetchResponse<IGame>, Error>({
         queryKey: ['games', gameQuery],
-        queryFn: () =>
+        queryFn: ({ pageParam = 1 }) =>
             apiClient.getAll({
                 params: {
                     genres: gameQuery.genre?.id,
                     parent_platforms: gameQuery.platform?.id,
                     ordering: gameQuery.sortOrder,
                     search: gameQuery.searchText,
+                    page: pageParam,
                 },
             }),
+        getNextPageParam: (lastPage, allPages) => {
+            return lastPage.next ? allPages.length + 1 : undefined;
+        },
     });
 // Using usedata hook instead of library React Query they are similar
 // But React Query is way better
