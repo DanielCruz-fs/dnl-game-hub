@@ -1,15 +1,14 @@
-import apiClient from '../services/api-client';
-import useData, { IFetchResponse } from './useData';
+import { IFetchResponse } from './useData';
 import { useQuery } from '@tanstack/react-query';
 import { IPlatform } from './useGames';
+import APIClient from '../services/api-client';
+
+const apiClient = new APIClient<IPlatform>('/platforms/lists/parents');
 
 const usePlatforms = () =>
     useQuery({
         queryKey: ['platforms'],
-        queryFn: () =>
-            apiClient
-                .get<IFetchResponse<IPlatform>>('/platforms/lists/parents')
-                .then((res) => res.data),
+        queryFn: apiClient.getAll,
         staleTime: 24 * 60 * 60 * 1000,
     });
 export default usePlatforms;
