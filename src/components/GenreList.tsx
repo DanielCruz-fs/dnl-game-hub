@@ -29,7 +29,7 @@ const GenreList = ({ onSelectGenre, selectedGenre }: IProps) => {
                 Genres
             </Heading>
             <List>
-                {data.map((g) => (
+                {data?.results.map((g) => (
                     <ListItem key={g.id} paddingY='5px'>
                         <HStack>
                             <Image
