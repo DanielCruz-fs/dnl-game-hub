@@ -13,8 +13,8 @@ import GameHeading from './components/GameHeading';
  * QUERY OBJECT PATTERN: Group all related data to make a query
  */
 export interface IGameQuery {
-    genre: IGenre | null;
-    platform: IPlatform | null;
+    genreId?: number;
+    platformId?: number;
     sortOrder: string;
     searchText: string;
 }
@@ -43,9 +43,9 @@ function App() {
             <Show above='lg'>
                 <GridItem area={'aside'} paddingX={5}>
                     <GenreList
-                        selectedGenre={gameQuery.genre}
+                        selectedGenreId={gameQuery.genreId}
                         onSelectGenre={(genre) =>
-                            setGameQuery({ ...gameQuery, genre: genre })
+                            setGameQuery({ ...gameQuery, genreId: genre.id })
                         }
                     />
                 </GridItem>
@@ -55,11 +55,11 @@ function App() {
                     <GameHeading gameQuery={gameQuery} />
                     <HStack spacing={5}>
                         <PlatformSelector
-                            selectedPlatform={gameQuery.platform}
+                            selectedPlatformId={gameQuery.platformId}
                             onSelectedPlatform={(platform) =>
                                 setGameQuery({
                                     ...gameQuery,
-                                    platform: platform,
+                                    platformId: platform.id,
                                 })
                             }
                         />

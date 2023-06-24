@@ -13,11 +13,18 @@ import { IPlatform } from '../hooks/useGames';
 
 interface IProps {
     onSelectedPlatform: (platform: IPlatform) => void;
-    selectedPlatform: IPlatform | null;
+    selectedPlatformId?: number;
 }
 
-const PlatformSelector = ({ onSelectedPlatform, selectedPlatform }: IProps) => {
+const PlatformSelector = ({
+    onSelectedPlatform,
+    selectedPlatformId,
+}: IProps) => {
     const { data, error } = usePlatforms();
+    const selectedPlatform = data?.results.find(
+        (p) => p.id === selectedPlatformId
+    );
+
     if (error) return null;
 
     return (
