@@ -1,7 +1,7 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { IGameQuery } from '../App';
-import { IFetchResponse } from './useData';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import APIClient from '../services/api-client';
+import useGameQueryStore from '../store';
+import { IFetchResponse } from './useData';
 
 export interface IPlatform {
     id: number;
@@ -20,9 +20,10 @@ export interface IGame {
 
 const apiClient = new APIClient<IGame>('/games');
 
-const useGames = (gameQuery: IGameQuery) =>
-    // anytime the gamequery changes even its properties react query send a new request
-    useInfiniteQuery<IFetchResponse<IGame>, Error>({
+const useGames = () => {
+    const gameQuery = useGameQueryStore((s) => s.gameQuery);
+
+    return useInfiniteQuery<IFetchResponse<IGame>, Error>({
         queryKey: ['games', gameQuery],
         queryFn: ({ pageParam = 1 }) =>
             apiClient.getAll({
@@ -38,19 +39,20 @@ const useGames = (gameQuery: IGameQuery) =>
             return lastPage.next ? allPages.length + 1 : undefined;
         },
     });
-// Using usedata hook instead of library React Query they are similar
-// But React Query is way better
-// useData<IGame>(
-//     '/games',
-//     {
-//         params: {
-//             genres: gameQuery.genre?.id,
-//             parent_platforms: gameQuery.platform?.id,
-//             ordering: gameQuery.sortOrder,
-//             search: gameQuery.searchText,
-//         },
-//     },
-//     [gameQuery]
-// );
+    // Using usedata hook instead of library React Query they are similar
+    // But React Query is way better
+    // useData<IGame>(
+    //     '/games',
+    //     {
+    //         params: {
+    //             genres: gameQuery.genre?.id,
+    //             parent_platforms: gameQuery.platform?.id,
+    //             ordering: gameQuery.sortOrder,
+    //             search: gameQuery.searchText,
+    //         },
+    //     },
+    //     [gameQuery]
+    // );
+};
 
 export default useGames;

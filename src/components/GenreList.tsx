@@ -10,14 +10,12 @@ import {
 } from '@chakra-ui/react';
 import useGenres, { IGenre } from '../hooks/useGenres';
 import getCroppedImageUrl from '../services/image-url';
+import useGameQueryStore from '../store';
 
-interface IProps {
-    onSelectGenre: (genre: IGenre) => void;
-    selectedGenreId?: number;
-}
-
-const GenreList = ({ onSelectGenre, selectedGenreId }: IProps) => {
+const GenreList = () => {
     const { data, isLoading, error } = useGenres();
+    const selectedGenreId = useGameQueryStore((s) => s.gameQuery.genreId);
+    const setSelectedGenreId = useGameQueryStore((s) => s.setGenreId);
 
     if (error) return null;
 
@@ -46,7 +44,7 @@ const GenreList = ({ onSelectGenre, selectedGenreId }: IProps) => {
                                 }
                                 fontSize='lg'
                                 variant='link'
-                                onClick={() => onSelectGenre(g)}
+                                onClick={() => setSelectedGenreId(g.id)}
                             >
                                 {g.name}
                             </Button>
