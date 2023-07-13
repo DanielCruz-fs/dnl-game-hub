@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import { BsChevronDown } from 'react-icons/bs';
 import usePlatforms from '../hooks/usePlatforms';
-import { IPlatform } from '../hooks/useGames';
+import { IPlatform } from '../entities/IPlatform';
 import usePlatform from '../hooks/usePlatform';
 import useGameQueryStore from '../store';
 
